@@ -6,7 +6,18 @@ A centralized repository for Model Context Protocol (MCP) server implementations
 
 This repository serves as a container for various Model Context Protocol server implementations. The MCP ([modelcontextprotocol.io](https://modelcontextprotocol.io)) is a protocol for AI assistants to interact with tools, services, and data.
 
-Each server is maintained as a git submodule, allowing for independent versioning while providing centralized management.
+## Included Servers
+
+This repository includes the following MCP servers:
+
+- **[mcp-server-qdrant](https://github.com/qdrant/mcp-server-qdrant)**: Vector database for semantic memory storage
+- **github**: GitHub API integration for repository management
+- **git**: Git operations for local repositories
+- **brave-search**: Integration with Brave Search engine
+- **fetch**: HTTP request capabilities
+- **filesystem**: Local filesystem operations
+- **sequentialthinking**: Step-by-step reasoning capabilities
+- **time**: Date and time utilities
 
 ## Structure
 
@@ -15,9 +26,14 @@ mcp/
 ├── .git/
 ├── .gitignore           # Configured for Python and TypeScript
 ├── README.md            # This file
-└── [server1]/           # MCP server submodule
-└── [server2]/           # MCP server submodule
-└── [server3]/           # MCP server submodule
+├── mcp-server-qdrant/   # Qdrant MCP server submodule
+├── github/              # GitHub MCP server
+├── git/                 # Git MCP server
+├── brave-search/        # Brave Search MCP server
+├── fetch/               # Fetch MCP server
+├── filesystem/          # Filesystem MCP server
+├── sequentialthinking/  # Sequential Thinking MCP server
+└── time/                # Time MCP server
 ```
 
 ## Getting Started
@@ -40,14 +56,14 @@ git submodule update --init --recursive
 
 ## Development
 
-Each MCP server maintains its own development setup. Please refer to the README of individual server submodules for specific development instructions.
+Each MCP server maintains its own development setup. Please refer to the README of individual server directories for specific development instructions.
 
 ## Contributing
 
 1. Follow the development setup for the specific server you want to contribute to
 2. Make your changes
-3. Submit a pull request to the appropriate submodule repository
+3. Submit a pull request
 
 ## License
 
-Each server submodule maintains its own license. Please check individual submodule repositories for license information. 
+Each MCP server maintains its own license. Please check individual server directories for license information. 
