@@ -11,6 +11,9 @@ This repository serves as a container for various Model Context Protocol server 
 This repository includes the following MCP servers:
 
 - **[mcp-server-qdrant](https://github.com/qdrant/mcp-server-qdrant)**: Vector database for semantic memory storage
+- **[mcp-server-docker](https://github.com/ckreiling/mcp-server-docker)**: Docker container operations
+- **[mcp-server-firecrawl](https://github.com/vrknetha/mcp-server-firecrawl)**: Firecrawl MCP server
+- **[searxng-mcp-server](https://github.com/maccam912/searxng-mcp-server)**: SearXNG metasearch engine integration
 - **github**: GitHub API integration for repository management
 - **git**: Git operations for local repositories
 - **brave-search**: Integration with Brave Search engine
@@ -27,6 +30,9 @@ mcp/
 ├── .gitignore           # Configured for Python and TypeScript
 ├── README.md            # This file
 ├── mcp-server-qdrant/   # Qdrant MCP server submodule
+├── mcp-server-docker/   # Docker MCP server submodule
+├── mcp-server-firecrawl/# Firecrawl MCP server submodule
+├── searxng-mcp-server/  # SearXNG MCP server submodule
 ├── github/              # GitHub MCP server
 ├── git/                 # Git MCP server
 ├── brave-search/        # Brave Search MCP server

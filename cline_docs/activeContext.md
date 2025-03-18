@@ -7,7 +7,11 @@
 
 ## Recent Changes
 - Created a comprehensive .gitignore file for Python and TypeScript projects
-- Added mcp-server-qdrant as a Git submodule for vector database capabilities
+- Added the following MCP servers as Git submodules:
+  - mcp-server-qdrant: Vector database for semantic memory storage
+  - mcp-server-docker: Docker container operations
+  - mcp-server-firecrawl: Firecrawl MCP server
+  - searxng-mcp-server: SearXNG metasearch engine integration
 - Added several MCP servers directly to the project root:
   - github: For GitHub API integration
   - git: For Git operations

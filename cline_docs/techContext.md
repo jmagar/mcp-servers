@@ -25,6 +25,12 @@
 ## Server Overview
 - **mcp-server-qdrant**: Vector database for semantic memory storage
   - Python-based, requires connection to a Qdrant vector database
+- **mcp-server-docker**: Docker container operations
+  - TypeScript-based, provides Docker management capabilities
+- **mcp-server-firecrawl**: Firecrawl MCP server
+  - TypeScript-based, provides web crawling functionality
+- **searxng-mcp-server**: SearXNG metasearch engine integration
+  - Python-based, provides privacy-focused search capabilities
 - **github**: GitHub API integration
   - TypeScript-based, requires GitHub API tokens
 - **git**: Git operations

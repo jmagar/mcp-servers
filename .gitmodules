@@ -1,3 +1,12 @@
 [submodule "mcp-server-qdrant"]
 	path = mcp-server-qdrant
 	url = https://github.com/qdrant/mcp-server-qdrant
+[submodule "mcp-server-docker"]
+	path = mcp-server-docker
+	url = https://github.com/ckreiling/mcp-server-docker
+[submodule "searxng-mcp-server"]
+	path = searxng-mcp-server
+	url = https://github.com/maccam912/searxng-mcp-server
+[submodule "mcp-server-firecrawl"]
+	path = mcp-server-firecrawl
+	url = https://github.com/vrknetha/mcp-server-firecrawl
