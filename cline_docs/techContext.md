@@ -2,9 +2,9 @@
 
 ## Technologies Used
 - Git and Git Submodules for version control and project organization
-- Python for certain MCP server implementations
-- TypeScript/JavaScript for other MCP server implementations
-- Container technology potentially used for deployment (Docker references in .gitignore)
+- Python for certain MCP server implementations (qdrant, git, fetch, time)
+- TypeScript/JavaScript for other MCP server implementations (github, brave-search, filesystem, sequentialthinking)
+- Docker containerization for deployment (most servers include Dockerfiles)
 - Model Context Protocol (MCP) for standardizing AI assistant interactions with tools and services
 
 ## Development Setup
@@ -17,8 +17,25 @@
 
 ## Technical Constraints
 - Submodules must be compatible with the parent repository's structure
-- Version management across multiple submodules requires careful coordination
 - Different technology stacks (Python vs TypeScript) must coexist in the project
-- Shared resources must be accessible to all submodules when needed
+- Different MCP servers have varying requirements and dependencies
 - All server implementations must adhere to the Model Context Protocol standards
-- Server APIs must be compatible with AI assistant interaction patterns 
+- Server APIs must be compatible with AI assistant interaction patterns
+
+## Server Overview
+- **mcp-server-qdrant**: Vector database for semantic memory storage
+  - Python-based, requires connection to a Qdrant vector database
+- **github**: GitHub API integration
+  - TypeScript-based, requires GitHub API tokens
+- **git**: Git operations
+  - Python-based, operates on local repositories
+- **brave-search**: Brave Search integration
+  - TypeScript-based, requires Brave Search API key
+- **fetch**: HTTP request capabilities
+  - Python-based, allows making HTTP requests to external services
+- **filesystem**: Local filesystem operations
+  - TypeScript-based, provides access to the file system
+- **sequentialthinking**: Step-by-step reasoning
+  - TypeScript-based, helps with complex problem solving
+- **time**: Date and time utilities
+  - Python-based, provides time-related functionality 
