@@ -15,7 +15,9 @@ mcp/
 ├── .git/
 ├── .gitignore           # Configured for Python and TypeScript
 ├── README.md            # This file
-└── servers/             # Directory containing server submodules
+└── [server1]/           # MCP server submodule
+└── [server2]/           # MCP server submodule
+└── [server3]/           # MCP server submodule
 ```
 
 ## Getting Started
