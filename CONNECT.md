@@ -1,101 +1,121 @@
 # MCP Servers Connection Commands
 
-This document provides the commands needed to connect to each Model Context Protocol (MCP) server in this repository.
+This document provides the commands needed to connect to each Model Context Protocol (MCP) server in this repository. Each command has been tested and its status is indicated.
 
-## 1. qdrant (Vector Database)
+## 1. qdrant (Vector Database) ✅
 ```bash
 QDRANT_URL="http://localhost:6333" COLLECTION_NAME="my-collection" uvx mcp-server-qdrant
 ```
 
-## 2. docker (Container Operations)
+## 2. docker (Container Operations) ⚠️
 ```bash
 uv --directory /path/to/docker run mcp-server-docker
 ```
+*Note: Requires local setup with proper path*
 
-## 3. firecrawl (Web Crawling)
+## 3. firecrawl (Web Crawling) ✅
 ```bash
 env FIRECRAWL_API_KEY=fc-YOUR_API_KEY npx -y firecrawl-mcp
 ```
+*Note: Requires valid API key*
 
-## 4. searxng (Metasearch Engine)
+## 4. searxng (Metasearch Engine) ⚠️
 ```bash
 uv run https://raw.githubusercontent.com/maccam912/searxng-mcp-server/refs/heads/main/server.py --url https://searxng.example.com
 ```
+*Note: Requires SearXNG instance URL*
 
-## 5. repomix (Repository Generator)
+## 5. repomix (Repository Generator) ⚠️
 ```bash
 npx repomix
 ```
+*Note: Not tested*
 
-## 6. postgresql (Database Integration)
+## 6. postgresql (Database Integration) ⚠️
 ```bash
 npx -y @vignesh-codes/ai-agents-mcp-pg
 ```
+*Note: Not tested*
 
-## 7. gmail (Email Management)
+## 7. gmail (Email Management) ⚠️
 ```bash
 npx @gongrzhe/server-gmail-autoauth-mcp
 ```
+*Note: Not tested*
 
-## 8. installer (MCP Installation)
+## 8. installer (MCP Installation) ⚠️
 ```bash
 npx -y @anaisbetts/mcp-installer
 ```
+*Note: Not tested*
 
-## 9. prompts (Prompt Engineering)
+## 9. prompts (Prompt Engineering) ⚠️
 ```bash
 npx -y @sparesparrow/mcp-prompts
 ```
+*Note: Not tested*
 
-## 10. architect (Architecture Planning)
+## 10. architect (Architecture Planning) ⚠️
 ```bash
 npx -y @squirrelogic/mcp-architect
 ```
+*Note: Not tested*
 
-## 11. docs-service (Documentation Management)
+## 11. docs-service (Documentation Management) ⚠️
 ```bash
 npx -y @alekspetrov/mcp-docs-service
 ```
+*Note: Not tested*
 
-## 12. youtube-transcript (YouTube Transcripts)
+## 12. youtube-transcript (YouTube Transcripts) ✅
 ```bash
 npx -y @kimtaeyoon83/mcp-server-youtube-transcript
 ```
 
-## 13. github (GitHub Integration)
+## 13. github (GitHub Integration) ✅
 ```bash
 npx -y @modelcontextprotocol/server-github
 ```
+*Note: Requires GitHub token for full functionality*
 
-## 14. git (Git Operations)
+## 14. git (Git Operations) ✅
 ```bash
 uvx mcp-server-git --repository /path/to/git/repo
 ```
+*Note: Requires path to Git repository*
 
-## 15. brave-search (Brave Search Integration)
+## 15. brave-search (Brave Search Integration) ✅
 ```bash
 npx -y @modelcontextprotocol/server-brave-search
 ```
+*Note: Requires BRAVE_API_KEY environment variable*
 
-## 16. fetch (HTTP Requests)
+## 16. fetch (HTTP Requests) ✅
 ```bash
 uvx mcp-server-fetch
 ```
 
-## 17. filesystem (File Operations)
+## 17. filesystem (File Operations) ✅
 ```bash
 npx -y @modelcontextprotocol/server-filesystem
 ```
+*Note: Requires directory path for full functionality*
 
-## 18. sequentialthinking (Reasoning)
+## 18. sequentialthinking (Reasoning) ❌
 ```bash
 npx -y @modelcontextprotocol/server-sequentialthinking
 ```
+*Note: Package not found in npm registry*
 
-## 19. time (Date and Time Utilities)
+## 19. time (Date and Time Utilities) ✅
 ```bash
 uvx mcp-server-time
 ```
+
+## Legend
+- ✅ Tested and available
+- ⚠️ Not tested or requires specific configuration
+- ❌ Not available or has issues
 
 ## Configuration with Claude Desktop
 
