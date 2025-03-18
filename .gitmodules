@@ -1,12 +1,36 @@
-[submodule "mcp-server-qdrant"]
-	path = mcp-server-qdrant
+[submodule "qdrant"]
+	path = qdrant
 	url = https://github.com/qdrant/mcp-server-qdrant
-[submodule "mcp-server-docker"]
-	path = mcp-server-docker
+[submodule "docker"]
+	path = docker
 	url = https://github.com/ckreiling/mcp-server-docker
-[submodule "searxng-mcp-server"]
-	path = searxng-mcp-server
+[submodule "searxng"]
+	path = searxng
 	url = https://github.com/maccam912/searxng-mcp-server
-[submodule "mcp-server-firecrawl"]
-	path = mcp-server-firecrawl
+[submodule "firecrawl"]
+	path = firecrawl
 	url = https://github.com/vrknetha/mcp-server-firecrawl
+[submodule "repomix"]
+	path = repomix
+	url = https://github.com/yamadashy/repomix
+[submodule "postgresql"]
+	path = postgresql
+	url = https://github.com/vignesh-codes/ai-agents-mcp-pg
+[submodule "gmail"]
+	path = gmail
+	url = https://github.com/GongRzhe/Gmail-MCP-Server
+[submodule "installer"]
+	path = installer
+	url = https://github.com/anaisbetts/mcp-installer
+[submodule "prompts"]
+	path = prompts
+	url = https://github.com/sparesparrow/mcp-prompts
+[submodule "architect"]
+	path = architect
+	url = https://github.com/squirrelogic/mcp-architect
+[submodule "docs-service"]
+	path = docs-service
+	url = https://github.com/alekspetrov/mcp-docs-service
+[submodule "youtube-transcript"]
+	path = youtube-transcript
+	url = https://github.com/kimtaeyoon83/mcp-server-youtube-transcript

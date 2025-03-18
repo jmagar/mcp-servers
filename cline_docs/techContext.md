@@ -6,6 +6,10 @@
 - TypeScript/JavaScript for other MCP server implementations (github, brave-search, filesystem, sequentialthinking)
 - Docker containerization for deployment (most servers include Dockerfiles)
 - Model Context Protocol (MCP) for standardizing AI assistant interactions with tools and services
+- Database technologies (PostgreSQL, Qdrant)
+- Web services integration (Gmail, YouTube)
+- Web crawling and content extraction (Firecrawl)
+- Search engines (SearXNG, Brave Search)
 
 ## Development Setup
 - Local development requires git with submodule support
@@ -14,6 +18,8 @@
 - IDE support for both Python and TypeScript codebases
 - .gitignore configured for both Python and TypeScript development patterns
 - Implementation must follow Model Context Protocol specifications from https://modelcontextprotocol.io
+- Google API credentials for certain services (Gmail, YouTube)
+- Database connections for data storage services
 
 ## Technical Constraints
 - Submodules must be compatible with the parent repository's structure
@@ -21,16 +27,35 @@
 - Different MCP servers have varying requirements and dependencies
 - All server implementations must adhere to the Model Context Protocol standards
 - Server APIs must be compatible with AI assistant interaction patterns
+- Some servers require external API keys or credentials
+- Authentication and security considerations vary between services
+- Consistent naming conventions for modularity and clarity
 
 ## Server Overview
-- **mcp-server-qdrant**: Vector database for semantic memory storage
+- **qdrant**: Vector database for semantic memory storage
   - Python-based, requires connection to a Qdrant vector database
-- **mcp-server-docker**: Docker container operations
+- **docker**: Docker container operations
   - TypeScript-based, provides Docker management capabilities
-- **mcp-server-firecrawl**: Firecrawl MCP server
+- **firecrawl**: Firecrawl MCP server
   - TypeScript-based, provides web crawling functionality
-- **searxng-mcp-server**: SearXNG metasearch engine integration
+- **searxng**: SearXNG metasearch engine integration
   - Python-based, provides privacy-focused search capabilities
+- **repomix**: Repository generator and customization
+  - JavaScript-based, helps generate and manage repositories
+- **postgresql**: PostgreSQL database integration
+  - TypeScript/JavaScript-based, enables PostgreSQL database interactions
+- **gmail**: Gmail email management
+  - TypeScript-based, requires Gmail API credentials
+- **installer**: MCP server installation utilities
+  - TypeScript-based, helps with MCP server setup
+- **prompts**: Prompt engineering and management
+  - JavaScript-based, provides prompt templates and management
+- **architect**: Software architecture planning
+  - JavaScript-based, assists with architecture design
+- **docs-service**: Documentation management
+  - TypeScript-based, helps create and manage documentation
+- **youtube-transcript**: YouTube transcript extraction
+  - TypeScript-based, extracts transcripts from YouTube videos
 - **github**: GitHub API integration
   - TypeScript-based, requires GitHub API tokens
 - **git**: Git operations
