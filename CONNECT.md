@@ -21,51 +21,51 @@ env FIRECRAWL_API_KEY=fc-YOUR_API_KEY npx -y firecrawl-mcp
 
 ## 4. searxng (Metasearch Engine) ⚠️
 ```bash
-uv run https://raw.githubusercontent.com/maccam912/searxng-mcp-server/refs/heads/main/server.py --url https://searxng.example.com
+uv run https://raw.githubusercontent.com/maccam912/searxng-mcp-server/refs/heads/main/server.py --url https://s.tootie.tv
 ```
 *Note: Requires SearXNG instance URL*
 
 ## 5. repomix (Repository Generator) ⚠️
 ```bash
-npx repomix
+npx repomix --mcp
 ```
-*Note: Not tested*
+*Note: The `--mcp` flag is needed to run as an MCP server*
 
 ## 6. postgresql (Database Integration) ⚠️
 ```bash
-npx -y @vignesh-codes/ai-agents-mcp-pg
+npx -y @modelcontextprotocol/server-postgres
 ```
-*Note: Not tested*
+*Note: Requires database connection details*
 
 ## 7. gmail (Email Management) ⚠️
 ```bash
 npx @gongrzhe/server-gmail-autoauth-mcp
 ```
-*Note: Not tested*
+*Note: Requires OAuth credentials setup*
 
 ## 8. installer (MCP Installation) ⚠️
 ```bash
 npx -y @anaisbetts/mcp-installer
 ```
-*Note: Not tested*
+*Note: Helper server to install other MCP servers*
 
 ## 9. prompts (Prompt Engineering) ⚠️
 ```bash
 npx -y @sparesparrow/mcp-prompts
 ```
-*Note: Not tested*
+*Note: Used for prompt engineering tasks*
 
 ## 10. architect (Architecture Planning) ⚠️
 ```bash
 npx -y @squirrelogic/mcp-architect
 ```
-*Note: Not tested*
+*Note: Provides architectural expertise*
 
 ## 11. docs-service (Documentation Management) ⚠️
 ```bash
 npx -y @alekspetrov/mcp-docs-service
 ```
-*Note: Not tested*
+*Note: Documentation management tools*
 
 ## 12. youtube-transcript (YouTube Transcripts) ✅
 ```bash
@@ -101,11 +101,11 @@ npx -y @modelcontextprotocol/server-filesystem
 ```
 *Note: Requires directory path for full functionality*
 
-## 18. sequentialthinking (Reasoning) ❌
+## 18. sequentialthinking (Reasoning) ✅
 ```bash
-npx -y @modelcontextprotocol/server-sequentialthinking
+npx -y @modelcontextprotocol/server-sequential-thinking
 ```
-*Note: Package not found in npm registry*
+*Note: Implements structured problem solving and reasoning*
 
 ## 19. time (Date and Time Utilities) ✅
 ```bash
