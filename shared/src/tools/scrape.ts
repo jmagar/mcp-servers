@@ -5,6 +5,7 @@ import { scrapeWithStrategy } from '../scraping-strategies.js';
 import { ResourceStorageFactory } from '../storage/index.js';
 import { ExtractClientFactory } from '../extract/index.js';
 import { createCleaner } from '../clean/index.js';
+import { buildCrawlRequestConfig, shouldStartCrawl } from '../crawl/config.js';
 
 // Detect content type based on content
 function detectContentType(content: string): string {
@@ -122,6 +123,27 @@ const buildScrapeArgsSchema = () => {
 
   return z.object(baseSchema);
 };
+
+function startBaseUrlCrawl(url: string, clients: IScrapingClients) {
+  if (!clients.firecrawl) return;
+  if (typeof clients.firecrawl.startCrawl !== 'function') return;
+  if (!shouldStartCrawl(url)) return;
+
+  const crawlConfig = buildCrawlRequestConfig(url);
+  if (!crawlConfig) return;
+
+  Promise.resolve(clients.firecrawl.startCrawl(crawlConfig))
+    .then((result) => {
+      if (!result.success) {
+        console.warn(
+          `Firecrawl crawl failed for ${crawlConfig.url}: ${result.error || 'Unknown error'}`
+        );
+      }
+    })
+    .catch((error) => {
+      console.warn('Firecrawl crawl request error:', error);
+    });
+}
 
 export function scrapeTool(
   _server: Server,
@@ -380,6 +402,9 @@ The tool automatically:
         }
 
         const rawContent = result.content || '';
+
+        // Kick off async crawl of base URL using Firecrawl
+        startBaseUrlCrawl(url, clients);
         let cleanedContent: string | undefined;
         let extractedContent: string | undefined;
         let displayContent = rawContent;

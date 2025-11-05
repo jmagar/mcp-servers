@@ -31,6 +31,10 @@ export class FirecrawlClient {
         const { scrapeWithFirecrawl } = await import('./scraping-client/lib/firecrawl-scrape.js');
         return scrapeWithFirecrawl(this.apiKey, url, options);
     }
+    async startCrawl(config) {
+        const { startFirecrawlCrawl } = await import('./scraping-client/lib/firecrawl-scrape.js');
+        return startFirecrawlCrawl(this.apiKey, config);
+    }
 }
 // BrightData client implementation
 export class BrightDataClient {

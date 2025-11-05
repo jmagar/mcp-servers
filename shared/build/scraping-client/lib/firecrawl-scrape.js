@@ -61,3 +61,51 @@ export async function scrapeWithFirecrawl(apiKey, url, options) {
         };
     }
 }
+export async function startFirecrawlCrawl(apiKey, config) {
+    const payload = {
+        url: config.url,
+        maxDepth: Math.max(config.maxDepth, 3),
+        changeDetection: config.changeDetection,
+        excludePaths: config.excludePaths,
+        scrapeOptions: {
+            formats: ['markdown', 'html'],
+        },
+    };
+    try {
+        const response = await fetch(`${FIRECRAWL_BASE_URL}/v2/crawl`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+            let errorDetail = '';
+            try {
+                const errorJson = await response.json();
+                errorDetail = errorJson.error || errorJson.message || '';
+            }
+            catch {
+                errorDetail = await response.text();
+            }
+            return {
+                success: false,
+                error: `Firecrawl crawl error: ${response.status} ${response.statusText}${errorDetail ? ` - ${errorDetail}` : ''}`,
+            };
+        }
+        const result = await response.json().catch(() => ({}));
+        const crawlId = result?.jobId || result?.id || result?.data?.jobId;
+        return {
+            success: result?.success !== false,
+            crawlId,
+            error: result?.error,
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown Firecrawl crawl error',
+        };
+    }
+}

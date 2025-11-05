@@ -4,6 +4,7 @@ import { createRegisterTools } from './tools.js';
 import type { IStrategyConfigClient } from './strategy-config/index.js';
 import { FilesystemStrategyConfigClient } from './strategy-config/index.js';
 import { NativeScrapingClient } from './scraping-client/native-scrape-client.js';
+import type { CrawlRequestConfig } from './crawl/config.js';
 
 // Scraping client interfaces for external services
 export interface IFirecrawlClient {
@@ -18,6 +19,12 @@ export interface IFirecrawlClient {
       html: string;
       metadata: Record<string, unknown>;
     };
+    error?: string;
+  }>;
+
+  startCrawl?: (config: CrawlRequestConfig) => Promise<{
+    success: boolean;
+    crawlId?: string;
     error?: string;
   }>;
 }
@@ -93,6 +100,15 @@ export class FirecrawlClient implements IFirecrawlClient {
   }> {
     const { scrapeWithFirecrawl } = await import('./scraping-client/lib/firecrawl-scrape.js');
     return scrapeWithFirecrawl(this.apiKey, url, options);
+  }
+
+  async startCrawl(config: CrawlRequestConfig): Promise<{
+    success: boolean;
+    crawlId?: string;
+    error?: string;
+  }> {
+    const { startFirecrawlCrawl } = await import('./scraping-client/lib/firecrawl-scrape.js');
+    return startFirecrawlCrawl(this.apiKey, config);
   }
 }
 

@@ -4,6 +4,7 @@ import type {
   IBrightDataClient,
   IScrapingClients,
 } from '../../shared/build/server.js';
+import type { CrawlRequestConfig } from '../../shared/build/crawl/config.js';
 
 export interface MockNativeFetcher extends INativeFetcher {
   setMockResponse(response: {
@@ -24,7 +25,16 @@ export interface MockFirecrawlClient extends IFirecrawlClient {
       metadata: Record<string, unknown>;
     };
     error?: string;
+    crawl?: {
+      success: boolean;
+      crawlId?: string;
+      error?: string;
+    };
   }): void;
+
+  getLastCrawlConfig(): CrawlRequestConfig | undefined;
+  getCrawlCalls(): CrawlRequestConfig[];
+  resetCrawlCalls(): void;
 }
 
 export interface MockBrightDataClient extends IBrightDataClient {
@@ -63,6 +73,11 @@ export function createMockFirecrawlClient(): MockFirecrawlClient {
       metadata: Record<string, unknown>;
     };
     error?: string;
+    crawl?: {
+      success: boolean;
+      crawlId?: string;
+      error?: string;
+    };
   } = {
     success: true,
     data: {
@@ -72,13 +87,27 @@ export function createMockFirecrawlClient(): MockFirecrawlClient {
       metadata: { source: 'firecrawl' },
     },
   };
+  const crawlCalls: CrawlRequestConfig[] = [];
 
   return {
     async scrape(_url: string) {
       return mockResponse;
     },
+    async startCrawl(config: CrawlRequestConfig) {
+      crawlCalls.push(config);
+      return mockResponse.crawl || { success: true, crawlId: 'mock-crawl-id' };
+    },
     setMockResponse(response) {
       mockResponse = response;
+    },
+    getLastCrawlConfig() {
+      return crawlCalls[crawlCalls.length - 1];
+    },
+    getCrawlCalls() {
+      return [...crawlCalls];
+    },
+    resetCrawlCalls() {
+      crawlCalls.length = 0;
     },
   };
 }

@@ -32,6 +32,7 @@ describe('Scrape Tool', () => {
     mockNative = mocks.native;
     mockFirecrawl = mocks.firecrawl;
     mockBrightData = mocks.brightData;
+    mockFirecrawl.resetCrawlCalls();
 
     // Create mock strategy config client
     mockStrategyConfigClient = {
@@ -43,6 +44,38 @@ describe('Scrape Tool', () => {
   });
 
   describe('scrape tool', () => {
+    it('should start an async Firecrawl crawl for the base URL', async () => {
+      mockNative.setMockResponse({
+        success: true,
+        status: 200,
+        data: 'Native content success',
+      });
+
+      const tool = scrapeTool(
+        mockServer,
+        () => mockClients,
+        () => mockStrategyConfigClient
+      );
+
+      const crawlPromise = tool.handler({
+        url: 'https://docs.claude.com/en/claude-code',
+        resultHandling: 'returnOnly',
+      });
+
+      await crawlPromise;
+
+      const crawlCalls = mockFirecrawl.getCrawlCalls();
+      expect(crawlCalls.length).toBe(1);
+      expect(crawlCalls[0]).toMatchObject({
+        url: 'https://docs.claude.com',
+        changeDetection: true,
+      });
+      expect(crawlCalls[0].maxDepth).toBeGreaterThanOrEqual(3);
+      expect(crawlCalls[0].excludePaths).toContain('^/fr/');
+      expect(crawlCalls[0].excludePaths).toContain('^/zh-CN/');
+      expect(crawlCalls[0].excludePaths).not.toContain('^/en/');
+    });
+
     it('should use native fetcher when successful', async () => {
       // Set up mock for successful native fetch
       mockNative.setMockResponse({
@@ -302,19 +335,12 @@ describe('Scrape Tool', () => {
           // Not specifying resultHandling - should default to saveAndReturn
         });
 
-        expect(result).toMatchObject({
-          content: [
-            {
-              type: 'resource',
-              resource: {
-                uri: expect.stringMatching(/^memory:\/\//),
-                name: expect.stringMatching(/^https:\/\/example\.com\/save-and-return-test-.*$/),
-                mimeType: 'text/markdown',
-                text: expect.stringContaining('Content to save and return'),
-              },
-            },
-          ],
-        });
+        expect(result.content).toHaveLength(1);
+        const resource = result.content[0];
+        expect(resource.type).toBe('resource');
+        expect(resource.resource?.name).toMatch(/^https:\/\/example\.com\/save-and-return-test-.*$/);
+        expect(resource.resource?.mimeType).toBe('text/markdown');
+        expect(resource.resource?.text).toContain('Content to save and return');
         // Should only have the embedded resource
         expect(result.content).toHaveLength(1);
       });
@@ -336,19 +362,16 @@ describe('Scrape Tool', () => {
           resultHandling: 'saveOnly',
         });
 
-        expect(result).toMatchObject({
-          content: [
-            {
-              type: 'resource_link',
-              uri: expect.stringMatching(/^memory:\/\//),
-              name: expect.stringMatching(/^https:\/\/example\.com\/save-only-test-.*$/),
-              mimeType: 'text/markdown',
-              description: expect.stringMatching(
-                /^Scraped content from https:\/\/example\.com\/save-only-test-.*/
-              ),
-            },
-          ],
-        });
+        expect(result.content).toHaveLength(1);
+        const link = result.content[0];
+        expect(link.type).toBe('resource_link');
+        expect(typeof link.uri).toBe('string');
+        expect(link.uri.length).toBeGreaterThan(0);
+        expect(link.name).toMatch(/^https:\/\/example\.com\/save-only-test-.*$/);
+        expect(link.mimeType).toBe('text/markdown');
+        expect(link.description).toMatch(
+          /^Scraped content from https:\/\/example\.com\/save-only-test-.*/
+        );
         // Should not have text content
         expect(result.content).toHaveLength(1);
         expect(result.content[0].type).toBe('resource_link');

@@ -1,5 +1,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import type { IStrategyConfigClient } from './strategy-config/index.js';
+import type { CrawlRequestConfig } from './crawl/config.js';
 export interface IFirecrawlClient {
     scrape(url: string, options?: Record<string, unknown>): Promise<{
         success: boolean;
@@ -9,6 +10,11 @@ export interface IFirecrawlClient {
             html: string;
             metadata: Record<string, unknown>;
         };
+        error?: string;
+    }>;
+    startCrawl?: (config: CrawlRequestConfig) => Promise<{
+        success: boolean;
+        crawlId?: string;
         error?: string;
     }>;
 }
@@ -51,6 +57,11 @@ export declare class FirecrawlClient implements IFirecrawlClient {
             html: string;
             metadata: Record<string, unknown>;
         };
+        error?: string;
+    }>;
+    startCrawl(config: CrawlRequestConfig): Promise<{
+        success: boolean;
+        crawlId?: string;
         error?: string;
     }>;
 }

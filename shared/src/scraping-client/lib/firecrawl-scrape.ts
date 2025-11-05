@@ -1,3 +1,5 @@
+import type { CrawlRequestConfig } from '../../crawl/config.js';
+
 // Validate and cache the base URL at module load time
 const getBaseUrl = (): string => {
   const baseUrl = process.env.FIRECRAWL_API_BASE_URL || 'https://api.firecrawl.dev';
@@ -79,6 +81,65 @@ export async function scrapeWithFirecrawl(
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown Firecrawl error',
+    };
+  }
+}
+
+export async function startFirecrawlCrawl(
+  apiKey: string,
+  config: CrawlRequestConfig
+): Promise<{
+  success: boolean;
+  crawlId?: string;
+  error?: string;
+}> {
+  const payload = {
+    url: config.url,
+    maxDepth: Math.max(config.maxDepth, 3),
+    changeDetection: config.changeDetection,
+    excludePaths: config.excludePaths,
+    scrapeOptions: {
+      formats: ['markdown', 'html'],
+    },
+  };
+
+  try {
+    const response = await fetch(`${FIRECRAWL_BASE_URL}/v2/crawl`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      let errorDetail = '';
+      try {
+        const errorJson = await response.json();
+        errorDetail = errorJson.error || errorJson.message || '';
+      } catch {
+        errorDetail = await response.text();
+      }
+
+      return {
+        success: false,
+        error: `Firecrawl crawl error: ${response.status} ${response.statusText}${errorDetail ? ` - ${errorDetail}` : ''}`,
+      };
+    }
+
+    const result = await response.json().catch(() => ({}));
+    const crawlId = result?.jobId || result?.id || result?.data?.jobId;
+
+    return {
+      success: result?.success !== false,
+      crawlId,
+      error: result?.error,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown Firecrawl crawl error',
     };
   }
 }
