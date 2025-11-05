@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **HTTP Streaming Transport**: Complete implementation of HTTP-based MCP server using StreamableHTTPServerTransport
+  - New `remote/` package for network-accessible deployments
+  - Express-based server with GET/POST/DELETE endpoint support
+  - Session management with cryptographically secure session IDs
+  - Event store for resumability support (in-memory MVP, extensible to Redis/DB)
+  - CORS configuration with customizable origins and hosts
+  - DNS rebinding protection for production security
+  - Health check endpoint at `/health`
+  - Docker and Docker Compose configuration for containerized deployment
+  - Graceful shutdown with proper transport cleanup
+  - Comprehensive documentation in `remote/README.md`
+- Transport factory pattern for easy StreamableHTTPServerTransport configuration
+- Middleware architecture (CORS, health checks, authentication placeholder)
+- Environment-based configuration for HTTP server (PORT, ALLOWED_ORIGINS, ALLOWED_HOSTS, ENABLE_RESUMABILITY)
+
+### Changed
+- Project structure now clearly distinguishes between stdio (`local/`) and HTTP (`remote/`) transports
+- Updated root README with HTTP transport documentation and usage examples
+- Both transport implementations share the same core functionality (`shared/`) ensuring feature parity
+
 ## [0.3.0] - 2025-10-08
 
 ### Changed

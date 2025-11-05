@@ -250,9 +250,49 @@ To set up the local version:
 5. Update your Claude Desktop config with the correct path
 6. Restart Claude Desktop
 
-### Remote Setup
+### Remote Setup (HTTP Streaming)
 
-For a hosted solution, refer to [Pulse Fetch (Remote)](remote/README.md).
+Pulse Fetch also supports HTTP streaming transport for network-accessible deployments. This is ideal for:
+
+- Hosting MCP servers on remote servers
+- Containerized deployments (Docker, Kubernetes)
+- Cloud platforms (AWS, GCP, Azure)
+- Multi-client environments
+- Browser-based MCP clients
+
+**Quick Start with HTTP Transport:**
+
+```bash
+# Navigate to remote directory
+cd remote
+
+# Install dependencies
+npm install
+
+# Set up environment
+cp .env.example .env
+# Edit .env with your API keys and PORT
+
+# Build and run
+npm run build
+npm start
+```
+
+The server will start on `http://localhost:3000` (configurable via PORT environment variable).
+
+**Docker Deployment:**
+
+```bash
+cd remote
+docker-compose up -d
+```
+
+**Connecting Clients:**
+
+- **MCP Inspector**: `npx @modelcontextprotocol/inspector` → Connect to `http://localhost:3000/mcp`
+- **Claude Code**: `claude mcp add --transport http pulse-fetch-remote http://localhost:3000/mcp`
+
+For detailed documentation, configuration options, security considerations, and production deployment guides, refer to [Pulse Fetch HTTP Server Documentation](remote/README.md).
 
 # Development
 
@@ -260,20 +300,41 @@ For a hosted solution, refer to [Pulse Fetch (Remote)](remote/README.md).
 
 ```
 pulse-fetch/
-├── local/                 # Local server implementation
+├── local/                    # Local stdio server implementation
 │   ├── src/
-│   │   └── index.ts      # Main entry point
-│   ├── build/            # Compiled output
+│   │   └── index.ts         # Main entry point (stdio transport)
+│   ├── build/               # Compiled output
 │   └── package.json
-├── shared/               # Shared business logic
+├── remote/                   # HTTP streaming server implementation
 │   ├── src/
-│   │   ├── tools.ts      # Tool implementations
-│   │   ├── resources.ts  # Resource implementations
-│   │   └── types.ts      # Shared types
+│   │   ├── index.ts         # Main entry point (HTTP transport)
+│   │   ├── server.ts        # Express server setup
+│   │   ├── transport.ts     # StreamableHTTP transport factory
+│   │   ├── eventStore.ts    # Event storage for resumability
+│   │   └── middleware/      # CORS, health checks, auth
+│   ├── build/               # Compiled output
+│   ├── Dockerfile           # Docker image
+│   ├── docker-compose.yml   # Docker Compose config
 │   └── package.json
-└── remote/               # Remote server (planned)
-    └── README.md
+└── shared/                   # Shared business logic (used by both)
+    ├── src/
+    │   ├── tools.ts         # Tool implementations
+    │   ├── resources.ts     # Resource implementations
+    │   ├── healthcheck.ts   # API health checks
+    │   └── types.ts         # Shared types
+    └── package.json
 ```
+
+### Transport Implementations
+
+Pulse Fetch provides two transport mechanisms:
+
+| Transport | Package | Use Case | Protocol |
+|-----------|---------|----------|----------|
+| **stdio** | `@pulsemcp/pulse-fetch` | Claude Desktop, local CLI tools | stdin/stdout |
+| **HTTP Streaming** | `@pulsemcp/pulse-fetch-remote` | Remote servers, Docker, multi-client | HTTP + SSE |
+
+Both implementations share the same core functionality (`shared/`) ensuring feature parity.
 
 ## Running in Development Mode
 

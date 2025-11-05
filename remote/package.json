@@ -1,0 +1,55 @@
+{
+  "name": "@pulsemcp/pulse-fetch-remote",
+  "version": "0.3.0",
+  "description": "HTTP streaming transport implementation of pulse-fetch MCP server",
+  "mcpName": "com.pulsemcp.servers/pulse-fetch-remote",
+  "main": "build/index.js",
+  "type": "module",
+  "bin": {
+    "@pulsemcp/pulse-fetch-remote": "./build/index.js"
+  },
+  "files": [
+    "build/**/*.js",
+    "build/**/*.d.ts",
+    "shared/**/*.js",
+    "shared/**/*.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "tsx src/index.ts",
+    "predev": "cd ../shared && npm run build",
+    "prebuild": "cd ../shared && npm run build",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "@modelcontextprotocol/sdk": "^1.19.1",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "dom-to-semantic-markdown": "^1.5.0",
+    "dotenv": "^16.4.5",
+    "jsdom": "^26.1.0",
+    "openai": "^4.104.0",
+    "pdf-parse": "^1.1.1",
+    "pulse-fetch-shared": "file:../shared",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "mcp",
+    "http",
+    "streaming",
+    "server"
+  ],
+  "author": "PulseMCP",
+  "license": "MIT"
+}
